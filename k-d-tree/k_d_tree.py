@@ -2,6 +2,7 @@ from dataclasses import dataclass
 import math
 from typing import List, Optional
 
+
 @dataclass
 class Point:
     x: float
@@ -42,7 +43,7 @@ def build_kdtree(points: List[Point], depth=0) -> Optional[KDTreeNode]:
         right=build_kdtree(sorted_points[median_idx + 1:], depth + 1)
     )
 
-def kdtree_closest_point(root: Optional[KDTreeNode], 
+def kdtree_1_nearest_neighbour(root: Optional[KDTreeNode], 
                          target_point: Point, 
                          depth=0, 
                          best_point: Optional[Point] = None) -> Optional[Point]:
@@ -68,32 +69,29 @@ def kdtree_closest_point(root: Optional[KDTreeNode],
         near_branch = root.right
         far_branch = root.left
 
-    best_point = kdtree_closest_point(near_branch, target_point, depth + 1, best_point)
+    best_point = kdtree_1_nearest_neighbour(near_branch, target_point, depth + 1, best_point)
 
     if abs(target_value - current_value) < best_distance:
-        best_point = kdtree_closest_point(far_branch, target_point, depth + 1, best_point)
+        best_point = kdtree_1_nearest_neighbour(far_branch, target_point, depth + 1, best_point)
 
-    return best_point
+    return best_point  
+    
 
 if __name__ == "__main__":
     points = [
-        # Point(2.0, 4.0),
-        # Point(6.0, 15.0),
-        # Point(3.0, 4.0),
-        # Point(15.0, 13.0),
-        # Point(17.0, 15.0),
-        # Point(3.0, 2.0),
-        # Point(14.0, 19.0),
-        Point(4.0, 7.0),
-        Point(7.0, 13.0),
-        Point(9.0, 4.0),
-        Point(11.0, 10.0),
-        Point(14.0, 11.0),
-        Point(15.0, 3.0),
-        Point(16.0, 10.0),
+        Point(2.0, 4.0),
+        Point(6.0, 15.0),
+        Point(3.0, 4.0),
+        Point(15.0, 13.0),
+        Point(17.0, 15.0),
+        Point(3.0, 2.0),
+        Point(14.0, 19.0),
     ]
-    # new_point = Point(2.0, 3.0)
-    new_point = Point(14.0, 9.0)
+    new_point = Point(2.0, 3.0)
+
     kdtree = build_kdtree(points)
-    closest_point = kdtree_closest_point(kdtree, new_point)
-    print(f"closest point to {new_point} is {closest_point}")
+
+    closest_point = kdtree_1_nearest_neighbour(kdtree, new_point)
+
+    print(f"closest point to {new_point} is {closest_point}")    
+
