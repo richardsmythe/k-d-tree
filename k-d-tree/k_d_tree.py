@@ -27,7 +27,7 @@ def get_coord(point: Point, axis: int) -> float:
 def straight_line_distance(point1: Point, point2: Point) -> float:
     dx = point1.x - point2.x
     dy = point1.y - point2.y
-    return math.sqrt(dx * dx + dy * dy)
+    return dx * dx + dy * dy
 
 def build_kdtree(points: List[Point], depth=0) -> Optional[KDTreeNode]:
     if not points:
@@ -77,16 +77,23 @@ def kdtree_closest_point(root: Optional[KDTreeNode],
 
 if __name__ == "__main__":
     points = [
-        Point(2.0, 4.0),
-        Point(6.0, 15.0),
-        Point(3.0, 4.0),
-        Point(15.0, 13.0),
-        Point(17.0, 15.0),
-        Point(3.0, 2.0),
-        Point(14.0, 19.0),
+        # Point(2.0, 4.0),
+        # Point(6.0, 15.0),
+        # Point(3.0, 4.0),
+        # Point(15.0, 13.0),
+        # Point(17.0, 15.0),
+        # Point(3.0, 2.0),
+        # Point(14.0, 19.0),
+        Point(4.0, 7.0),
+        Point(7.0, 13.0),
+        Point(9.0, 4.0),
+        Point(11.0, 10.0),
+        Point(14.0, 11.0),
+        Point(15.0, 3.0),
+        Point(16.0, 10.0),
     ]
-    new_point = Point(2.0, 3.0)
-
+    # new_point = Point(2.0, 3.0)
+    new_point = Point(14.0, 9.0)
     kdtree = build_kdtree(points)
     closest_point = kdtree_closest_point(kdtree, new_point)
     print(f"closest point to {new_point} is {closest_point}")
